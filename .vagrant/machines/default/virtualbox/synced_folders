@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/Code":{"guestpath":"/home/vagrant/Code","hostpath":"/Users/James/Git Repos/xv6-machine/Code","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/James/Git Repos/xv6-machine","disabled":false,"__vagrantfile":true}}}
