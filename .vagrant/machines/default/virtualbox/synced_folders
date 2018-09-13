@@ -1,1 +1,1 @@
-{"virtualbox":{"/home/vagrant/Code":{"guestpath":"/home/vagrant/Code","hostpath":"/Users/James/Git Repos/xv6-machine/Code","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/James/Git Repos/xv6-machine","disabled":false,"__vagrantfile":true}}}
+{"virtualbox":{"/home/vagrant/Code":{"guestpath":"/home/vagrant/Code","hostpath":"D:/Git Repos/xv6-machine-rm_ar/Code","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"D:/Git Repos/xv6-machine-rm_ar","disabled":false,"__vagrantfile":true}}}

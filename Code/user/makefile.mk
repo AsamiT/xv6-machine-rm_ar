@@ -10,6 +10,7 @@ USER_PROGS := \
 	ln\
 	ls\
 	mkdir\
+	uptime\
 	rm\
 	sh\
 	stressfs\
@@ -102,4 +103,3 @@ user/%.d: user/%.c
 user/%.d: user/%.S
 	$(CC) $(CPPFLAGS) $(USER_CPPFLAGS) $(ASFLAGS) $(USER_ASFLAGS) \
 		-M -MG $< -MF $@ -MT $@ -MT $(<:.S=.o)
-
