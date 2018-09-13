@@ -91,5 +91,7 @@ sys_uptime(void)
 
 int sys_howmanysys(void)
 {
-  return 0;
+  int test;
+  test = sys_getpid();
+  return test;
 }

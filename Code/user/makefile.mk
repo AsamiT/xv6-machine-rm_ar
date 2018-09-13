@@ -11,6 +11,7 @@ USER_PROGS := \
 	ls\
 	mkdir\
 	uptime\
+	syscallchk\
 	rm\
 	sh\
 	stressfs\
