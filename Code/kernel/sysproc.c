@@ -91,5 +91,5 @@ sys_uptime(void)
 
 int sys_howmanysys(void)
 {
-  //this is where our invocation will go of the mini-project
+  return 0;
 }
