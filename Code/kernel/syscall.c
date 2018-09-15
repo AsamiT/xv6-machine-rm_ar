@@ -106,6 +106,8 @@ static int (*syscalls[])(void) = {
 [SYS_howmanysys] sys_howmanysys, //howmanysys() -- mini-project functionality
 };
 
+int sysCall_int = 0;
+
 // Called on a syscall trap. Checks that the syscall number (passed via eax)
 // is valid and then calls the appropriate handler for the syscall.
 void
@@ -113,6 +115,7 @@ syscall(void)
 {
   int num;
   num = proc->tf->eax;
+  sysCall_int++;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num] != NULL) {
     proc->tf->eax = syscalls[num]();
   } else {

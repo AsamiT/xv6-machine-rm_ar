@@ -5,6 +5,7 @@
 #include "mmu.h"
 #include "proc.h"
 #include "sysfunc.h"
+int sysCall_int;
 
 int
 sys_fork(void)
@@ -91,7 +92,5 @@ sys_uptime(void)
 
 int sys_howmanysys(void)
 {
-  int test;
-  test = sys_getpid();
-  return test;
+  return sysCall_int;
 }

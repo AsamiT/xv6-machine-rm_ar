@@ -12,6 +12,6 @@
 #include "user.h"
 
 int main() {
-  printf(1, "There have been %d system calls.\n", howmanysys());
+  printf(1, "There have been %d system calls since boot.\n", howmanysys());
   exit();
 }
