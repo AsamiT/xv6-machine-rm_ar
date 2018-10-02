@@ -23,6 +23,8 @@ int sys_unlink(void);
 int sys_wait(void);
 int sys_write(void);
 int sys_uptime(void);
-extern int sys_howmanysys(void); //added: RM2612; 9-13-18
+extern int sys_howmanysys(void);
+int sys_getpinfo(void);
+int sys_settickets(void);
 
 #endif // _SYSFUNC_H_

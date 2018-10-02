@@ -23,8 +23,6 @@ all: xv6.img fs.img
 CC = gcc
 # enable extra warnings
 CFLAGS += -Wall
-# treat warnings as errors
-CFLAGS += -Werror
 # produce debugging information for use by gdb
 CFLAGS += -ggdb
 
