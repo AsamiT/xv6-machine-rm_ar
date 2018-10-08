@@ -262,7 +262,6 @@ void
 scheduler(void)
 {
   struct proc *p;
-  struct pstat *ps;
 
   for(;;){
     // Enable interrupts on this processor.
@@ -289,7 +288,7 @@ scheduler(void)
 
       if (tickets > 0) {
         int winner = random_at_most(20);
-        tickets = winner;
+        tickets = winner+1;
       }
 
       if (p->queue == 2 && ticktock > 0) {
