@@ -5,6 +5,7 @@
 #include "mmu.h"
 #include "proc.h"
 #include "sysfunc.h"
+#include "pstat.h"
 int sysCall_int;
 
 int
@@ -93,4 +94,14 @@ sys_uptime(void)
 int sys_howmanysys(void)
 {
   return sysCall_int;
+}
+
+int sys_getpinfo(void)
+{
+  return getpinfo();
+}
+
+int sys_settickets(void)
+{
+  return settickets(1);
 }

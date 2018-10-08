@@ -5,6 +5,9 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "pstat.h"
+#include "sysfunc.h"
+#include "rand.h"
 
 struct {
   struct spinlock lock;
@@ -44,6 +47,9 @@ allocproc(void)
 
 found:
   p->state = EMBRYO;
+  p->tickets = 1;
+  p->ticks = 0;
+  p->queue = 1;
   p->pid = nextpid++;
   release(&ptable.lock);
 
@@ -256,6 +262,7 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct pstat *ps;
 
   for(;;){
     // Enable interrupts on this processor.
@@ -263,25 +270,66 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
-        continue;
 
+    //Declare maximum ticket count -- static
+    //Declare ticket variable and ticktock variable, non-static
+
+    int tickets = 0;
+    int ticktock = 0;
+
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE) {
+        continue;
+        }
+      tickets += p->tickets;
+
+      if (p->queue == 1) {
+        ticktock++;
+      }
+
+      if (tickets > 0) {
+        int winner = random_at_most(20);
+        tickets = winner;
+      }
+
+      if (p->queue == 2 && ticktock > 0) {
+          continue;
+      }
+
+      int j = 1;
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       proc = p;
       switchuvm(p);
       p->state = RUNNING;
+      if (p->queue == 1) {
+        p->ticks++;
+      }
+      else {
+        p->ticks++;
+      }
       swtch(&cpu->scheduler, proc->context);
       switchkvm();
 
       // Process is done running for now.
       // It should have changed its p->state before coming back.
+      if (p->queue == 1) {
+        p->queue = 2;
+        ticktock--;
+      }
+      else if (1==j && p->state == RUNNABLE) {
+        proc = p;
+        p->state = RUNNING;
+        p->ticks++;
+        switchuvm(p);
+        swtch(&cpu->scheduler, proc->context);
+        switchkvm();
+      }
       proc = 0;
+      p->tickets = tickets;
     }
     release(&ptable.lock);
-
   }
 }
 
@@ -441,4 +489,41 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+
+int getpinfo(void) {
+  struct pstat *ps;
+  struct proc *p;
+  int i;
+
+  if (argptr(0, (void *)&ps, sizeof(*ps)) < 0) {
+    return -1;
+  }
+  acquire(&ptable.lock);
+  for (i=0; i < NPROC; i++) {
+    p = &ptable.proc[i];
+    ps->pid[i] = p->pid;
+    if (p->state == UNUSED) {
+      ps->inuse[i] = 0;
+    }
+    else {
+      ps->inuse[i] = 1;
+    }
+    ps->ticks[i] = p->ticks;
+    ps->tickets[i] = p->tickets;
+  }
+  release(&ptable.lock);
+  return 0;
+}
+
+int settickets(void) {
+  int num;
+  if (argint(0, &num) < 0) {
+    return -1;
+  }
+  if (num < -1) {
+    return -1;
+  }
+  proc->tickets = num;
+  return 0;
 }
