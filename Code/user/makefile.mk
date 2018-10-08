@@ -15,7 +15,6 @@ USER_PROGS := \
 	rm\
 	sh\
 	stressfs\
-	p2test\
 	tester\
 	usertests\
 	wc\
