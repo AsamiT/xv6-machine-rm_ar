@@ -161,6 +161,7 @@ fork(void)
 
   pid = np->pid;
   np->state = RUNNABLE;
+  np->tickets = proc->tickets; //clone the tickets from source
   safestrcpy(np->name, proc->name, sizeof(proc->name));
   return pid;
 }
