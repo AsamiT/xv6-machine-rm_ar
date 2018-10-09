@@ -25,6 +25,6 @@
 #define SYS_uptime 21
 #define SYS_howmanysys 22 //added by RM2612; 9-13-18
 #define SYS_settickets 23 //added by RM2612
-#define SYS_getpinfo 24 //added by RM2612
+#define SYS_getpinfo 24 //added by AR0562
 
 #endif // _SYSCALL_H_
