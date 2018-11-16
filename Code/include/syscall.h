@@ -26,5 +26,8 @@
 #define SYS_howmanysys 22 //added by RM2612; 9-13-18
 #define SYS_settickets 23 //added by RM2612
 #define SYS_getpinfo 24 //added by AR0562
+/* p4 */
+#define SYS_clone 25 // added by RM2612;
+#define SYS_join 26
 
 #endif // _SYSCALL_H_

@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
 	printf(1,"code %p\n", main);
 	printf(1, "stack %p\n", &ptr);
 	printf(1, "heap %p\n", ptr);
+	printf(1, "ptr address %x\n", *ptr);
 	deref = 3;
 	ptr = deref;
 	*ptr = 0;

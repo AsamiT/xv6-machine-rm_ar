@@ -105,7 +105,9 @@ static int (*syscalls[])(void) = {
 [SYS_uptime]  sys_uptime,
 [SYS_howmanysys] sys_howmanysys, //howmanysys() -- mini-project functionality
 [SYS_settickets] sys_settickets, //settickets()
-[SYS_getpinfo] sys_getpinfo //getpinfo()
+[SYS_getpinfo] sys_getpinfo, //getpinfo()
+[SYS_clone] sys_clone, //clone()
+[SYS_join] sys_join //join()
 };
 
 int sysCall_int = 0;

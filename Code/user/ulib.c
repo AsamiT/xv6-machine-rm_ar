@@ -3,6 +3,11 @@
 #include "fcntl.h"
 #include "user.h"
 #include "x86.h"
+#include "param.h"
+#include "syscall.h"
+#include "traps.h"
+#include "fs.h"
+#include "user.h"
 
 char*
 strcpy(char *s, char *t)
@@ -96,7 +101,7 @@ void*
 memmove(void *vdst, void *vsrc, int n)
 {
   char *dst, *src;
-  
+
   dst = vdst;
   src = vsrc;
   while(n-- > 0)

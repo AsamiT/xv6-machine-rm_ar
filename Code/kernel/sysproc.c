@@ -105,3 +105,12 @@ int sys_settickets(void)
 {
   return settickets(1);
 }
+
+int sys_clone(void)
+{
+	return clone();
+}
+
+int sys_join(void) {
+	return join();
+}
