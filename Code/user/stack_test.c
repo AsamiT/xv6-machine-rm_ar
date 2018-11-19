@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
         stack = stack + (PGSIZE - (uint)stack % PGSIZE); //stack = stack + (stack mod pgsize)
     }
     
-    int clone_pid = clone(worker, 0, stack); //clone the process
+    int clone_pid = clone(worker, stack, stack); //clone the process with the stack
     assert(clone_pid > 0); //assert to see if the clone worked
     while(global != 5) ;
     printf(1, "TEST PASSED\n"); //pronounce our success!
@@ -54,7 +54,8 @@ int main(int argc, char *argv[]) {
 }
 
 void worker(void *arg_ptr) {
-    assert(global == 1);
+    assert((uint)&arg_ptr == ((uint)arg_ptr + PGSIZE - 4));
+    assert(*((uint*) (arg_ptr + PGSIZE - 8)) == 0xffffffff);
     global = 5;
     exit();
 }
