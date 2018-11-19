@@ -18,13 +18,10 @@ USER_PROGS := \
 	stressfs\
 	tester\
 	usertests\
-	p2test\
 	wc\
 	zombie\
 	clone_test\
-	thread_test\
-	threadtest2\
-	basic_thread\
+	badclone\
 
 USER_PROGS := $(addprefix user/, $(USER_PROGS))
 

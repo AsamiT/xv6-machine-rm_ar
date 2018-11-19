@@ -1,6 +1,6 @@
 /*
  
- @name: clone_test.c
+ @name: badclone.c
  @date: Nov 2018
  
  This program is a clone of the tester program provided by Akshay Uttamani on YouTube, as provided
@@ -16,8 +16,8 @@
 #define PGSIZE (4096)
 
 /* global declarations */
-int global = 1;
 int pid;
+int global = 1;
 
 #define assert(x) if (x) {} else { \
     printf(1, "%s: %d ", __FILE__, __LINE__); \
@@ -42,15 +42,23 @@ int main(int argc, char *argv[]) {
     pid = getpid(); //pid number
     void *stack = malloc(PGSIZE*2); //allocate a memory area twice the page size we defined above
     assert(stack != NULL); //check to make sure stack was properly allocated
-    if((uint)stack % PGSIZE) { //if stack is modulo PGSIZE
-        stack = stack + (PGSIZE - (uint)stack % PGSIZE); //stack = stack + (stack mod pgsize)
+    if((uint)stack % PGSIZE == 0) { //if stack is modulo PGSIZE
+        stack += 4;
     }
     
-    int clone_pid = clone(worker, 0, stack); //clone the process
-    assert(clone_pid > 0); //assert to see if the clone worked
-    while(global != 5) ;
-    printf(1, "TEST PASSED\n"); //pronounce our success!
-    exit(); //follow the rabbit hole
+    assert(clone(worker, 0, stack) == -1);
+    
+    stack = sbrk(0);
+    if((uint)stack % PGSIZE) {
+        stack = stack + (PGSIZE - (uint)stack % PGSIZE);
+    }
+    sbrk( ((uint)stack - (uint)sbrk(0)) + PGSIZE/2);
+    assert((uint)stack % PGSIZE == 0);
+    assert((uint)sbrk(0) - (uint)stack == PGSIZE/2);
+    
+    assert(clone(worker, 0, stack) == -1);
+    printf(1, "TEST PASSED\n");
+    exit();
 }
 
 void worker(void *arg_ptr) {
