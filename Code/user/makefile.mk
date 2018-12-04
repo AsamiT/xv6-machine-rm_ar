@@ -23,6 +23,7 @@ USER_PROGS := \
 	clone_test\
 	badclone\
 	stack_test\
+	lock_test\
 
 USER_PROGS := $(addprefix user/, $(USER_PROGS))
 
