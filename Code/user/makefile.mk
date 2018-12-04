@@ -20,10 +20,10 @@ USER_PROGS := \
 	usertests\
 	wc\
 	zombie\
-	clone_test\
-	badclone\
-	stack_test\
-	lock_test\
+	rjm_stacktest
+	rjm_badclone\
+	rjm_clonetest\
+	rjm_locktest\
 
 USER_PROGS := $(addprefix user/, $(USER_PROGS))
 
