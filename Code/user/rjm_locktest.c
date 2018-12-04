@@ -1,6 +1,6 @@
 /*
  
- @name: lock_test.c
+ @name: rjm_locktest.c
  @date: Dec 2018
  
  This program is a clone of the tester program provided by Akshay Uttamani on YouTube, as provided

@@ -20,7 +20,10 @@ USER_PROGS := \
 	usertests\
 	wc\
 	zombie\
-	rjm_stacktest
+	rjm_jointest\
+	rjm_jointest2\
+	rjm_threadtest\
+	rjm_stacktest\
 	rjm_badclone\
 	rjm_clonetest\
 	rjm_locktest\

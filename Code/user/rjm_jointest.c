@@ -1,6 +1,6 @@
 /*
  
- @name: rjm_clonetest.c
+ @name: rjm_jointest.c
  @date: Nov 2018
  
  This program is a clone of the tester program provided by Akshay Uttamani on YouTube, as provided
@@ -16,6 +16,7 @@
 #define PGSIZE (4096)
 
 /* global declarations */
+int arg = 42;
 int global = 1;
 int pid;
 
@@ -40,21 +41,29 @@ void worker(void *arg_ptr); // declaring it here because reasons
 
 int main(int argc, char *argv[]) {
     pid = getpid(); //pid number
+    
     void *stack = malloc(PGSIZE*2); //allocate a memory area twice the page size we defined above
     assert(stack != NULL); //check to make sure stack was properly allocated
     if((uint)stack % PGSIZE) { //if stack is modulo PGSIZE
         stack = stack + (PGSIZE - (uint)stack % PGSIZE); //stack = stack + (stack mod pgsize)
     }
-    
-    int clone_pid = clone(worker, 0, stack); //clone the process
+    int clone_pid = clone(worker, &arg, stack); //clone the process with the stack
     assert(clone_pid > 0); //assert to see if the clone worked
-    while(global != 5) ;
+    
+    void *join_stack;
+    int join_pid = join(&join_stack);
+    assert(join_pid == clone_pid);
+    assert(stack == join_stack);
+    assert(global == 2);
+    
     printf(1, "TEST PASSED\n"); //pronounce our success!
     exit(); //follow the rabbit hole
 }
 
 void worker(void *arg_ptr) {
+    int arg = *(int*)arg_ptr;
+    assert(arg == 42);
     assert(global == 1);
-    global = 5;
+    global++;
     exit();
 }

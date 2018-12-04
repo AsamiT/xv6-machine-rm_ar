@@ -1,7 +1,7 @@
 /*
  
- @name: rjm_clonetest.c
- @date: Nov 2018
+ @name: rjm_threadtest.c
+ @date: Dec 2018
  
  This program is a clone of the tester program provided by Akshay Uttamani on YouTube, as provided
  by the professor. Other than preprocessor declarations, defining assert, and some minor changes
@@ -16,8 +16,8 @@
 #define PGSIZE (4096)
 
 /* global declarations */
-int global = 1;
 int pid;
+int global = 1;
 
 #define assert(x) if (x) {} else { \
     printf(1, "%s: %d ", __FILE__, __LINE__); \
@@ -40,21 +40,21 @@ void worker(void *arg_ptr); // declaring it here because reasons
 
 int main(int argc, char *argv[]) {
     pid = getpid(); //pid number
-    void *stack = malloc(PGSIZE*2); //allocate a memory area twice the page size we defined above
-    assert(stack != NULL); //check to make sure stack was properly allocated
-    if((uint)stack % PGSIZE) { //if stack is modulo PGSIZE
-        stack = stack + (PGSIZE - (uint)stack % PGSIZE); //stack = stack + (stack mod pgsize)
-    }
+    int arg = 35; //argument
+    int thread_pid = thread_create(worker, &arg); //create thread
+    assert(thread_pid > 0);
     
-    int clone_pid = clone(worker, 0, stack); //clone the process
-    assert(clone_pid > 0); //assert to see if the clone worked
-    while(global != 5) ;
+    int join_pid = thread_join();
+    assert(join_pid == thread_pid);
+    assert(global == 2);
     printf(1, "TEST PASSED\n"); //pronounce our success!
     exit(); //follow the rabbit hole
 }
 
 void worker(void *arg_ptr) {
-    assert(global == 1);
-    global = 5;
+    int arg = *(int*)arg_ptr;
+    assert(arg==35);
+    assert(global==1);
+    global++;
     exit();
 }

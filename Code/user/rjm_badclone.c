@@ -1,6 +1,6 @@
 /*
  
- @name: badclone.c
+ @name: rjm_badclone.c
  @date: Nov 2018
  
  This program is a clone of the tester program provided by Akshay Uttamani on YouTube, as provided
